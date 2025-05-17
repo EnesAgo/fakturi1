@@ -29,24 +29,15 @@
         <tbody>
         <!-- Rows injected here -->
         </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="3"><strong>Subtotal</strong></td>
-            <td id="subtotal">0.00</td>
-            <td class="no-print"></td>
-        </tr>
-        <tr>
-            <td colspan="3"><strong>Tax (5%)</strong></td>
-            <td id="tax">0.00</td>
-            <td class="no-print"></td>
-        </tr>
-        <tr>
-            <td colspan="3"><strong>Total with Tax</strong></td>
-            <td id="totalWithTax">0.00</td>
-            <td class="no-print"></td>
-        </tr>
-        </tfoot>
     </table>
+
+    <!-- New Summary Section -->
+    <div class="summary">
+        <p><strong>Subtotal:</strong> $<span id="subtotal">0.00</span></p>
+        <p><strong>Tax (5%):</strong> $<span id="tax">0.00</span></p>
+        <p><strong>Total with Tax:</strong> $<span id="totalWithTax">0.00</span></p>
+    </div>
+
 
     <div class="buttons no-print">
         <button onclick="window.print()">🖨️ Print</button>

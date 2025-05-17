@@ -106,6 +106,16 @@ body.dark tfoot td {
     color: #f0f0f0;
 }
 
+.summary {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+body.dark .summary {
+    color: #f0f0f0;
+}
+
+
 /* Hide in print */
 @media print {
     .no-print {
