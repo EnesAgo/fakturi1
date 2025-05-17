@@ -7,17 +7,31 @@ function saveProducts() {
 
 function renderTable() {
     tableBody.innerHTML = "";
+    let subtotal = 0;
+
     products.forEach((prod, index) => {
+        const total = prod.amount * prod.price;
+        subtotal += total;
+
         const row = document.createElement("tr");
         row.innerHTML = `
       <td contenteditable="true" oninput="editProduct(${index}, 'name', this.innerText)">${prod.name}</td>
       <td contenteditable="true" oninput="editProduct(${index}, 'amount', this.innerText)">${prod.amount}</td>
       <td contenteditable="true" oninput="editProduct(${index}, 'price', this.innerText)">${prod.price}</td>
-      <td>${(prod.amount * prod.price).toFixed(2)}</td>
-      <td><button onclick="deleteProduct(${index})">🗑️</button></td>
+      <td>${total.toFixed(2)}</td>
+      <td class="no-print"><button onclick="deleteProduct(${index})">🗑️</button></td>
     `;
         tableBody.appendChild(row);
     });
+
+    const tax = subtotal * 0.05;
+    const totalWithTax = subtotal + tax;
+
+    document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+    document.getElementById("tax").textContent = tax.toFixed(2);
+    document.getElementById("totalWithTax").textContent = totalWithTax.toFixed(2);
+
+    saveProducts();
 }
 
 function addProduct() {
@@ -31,7 +45,6 @@ function addProduct() {
     }
 
     products.push({ name, amount, price });
-    saveProducts();
     renderTable();
 
     document.getElementById("name").value = "";
@@ -41,7 +54,6 @@ function addProduct() {
 
 function deleteProduct(index) {
     products.splice(index, 1);
-    saveProducts();
     renderTable();
 }
 
@@ -51,13 +63,16 @@ function editProduct(index, field, value) {
         if (isNaN(value)) return;
     }
     products[index][field] = value;
-    saveProducts();
-    renderTable(); // Recalculate total
+    renderTable();
 }
 
 function exportCSV() {
     const headers = ["Name", "Amount", "Price", "Total"];
     const rows = products.map(p => [p.name, p.amount, p.price, (p.amount * p.price).toFixed(2)]);
+    rows.push([], ["Subtotal", "", "", document.getElementById("subtotal").textContent]);
+    rows.push(["Tax (5%)", "", "", document.getElementById("tax").textContent]);
+    rows.push(["Total with Tax", "", "", document.getElementById("totalWithTax").textContent]);
+
     const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
     const blob = new Blob([csvContent], { type: "text/csv" });
     const link = document.createElement("a");
@@ -66,8 +81,32 @@ function exportCSV() {
     link.click();
 }
 
+function exportPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Product Table", 14, 20);
+
+    const headers = [["Name", "Amount", "Price", "Total"]];
+    const rows = products.map(p => [p.name, p.amount, p.price, (p.amount * p.price).toFixed(2)]);
+
+    rows.push(["", "", "", ""]);
+    rows.push(["Subtotal", "", "", document.getElementById("subtotal").textContent]);
+    rows.push(["Tax (5%)", "", "", document.getElementById("tax").textContent]);
+    rows.push(["Total with Tax", "", "", document.getElementById("totalWithTax").textContent]);
+
+    doc.autoTable({
+        startY: 30,
+        head: headers,
+        body: rows
+    });
+
+    doc.save("products.pdf");
+}
+
 function toggleDarkMode() {
     document.body.classList.toggle("dark");
 }
 
-renderTable(); // Load on page load
+renderTable();

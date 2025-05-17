@@ -1,19 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product Entry App</title>
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
 </head>
 <body>
-
 <div class="container">
     <h1>Product Table</h1>
 
-    <div class="input-section">
+    <div class="input-section no-print">
         <input type="text" id="name" placeholder="Product Name">
         <input type="number" id="amount" placeholder="Amount" min="1">
         <input type="number" id="price" placeholder="Price" min="0" step="0.01">
@@ -27,22 +23,43 @@
             <th>Amount</th>
             <th>Price</th>
             <th>Total</th>
-            <th>Actions</th>
+            <th class="no-print">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Products will be added here -->
+        <!-- Rows injected here -->
         </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3"><strong>Subtotal</strong></td>
+            <td id="subtotal">0.00</td>
+            <td class="no-print"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><strong>Tax (5%)</strong></td>
+            <td id="tax">0.00</td>
+            <td class="no-print"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><strong>Total with Tax</strong></td>
+            <td id="totalWithTax">0.00</td>
+            <td class="no-print"></td>
+        </tr>
+        </tfoot>
     </table>
 
-    <div class="buttons">
+    <div class="buttons no-print">
         <button onclick="window.print()">🖨️ Print</button>
         <button onclick="exportCSV()">📁 Export CSV</button>
+        <button onclick="exportPDF()">📄 Export PDF</button>
         <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
     </div>
 </div>
 
-
+<!-- jsPDF CDN for PDF export -->
+<script src="jspdf.umd.min.js"></script>
+<script src="jspdf.plugin.autotable.min.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
