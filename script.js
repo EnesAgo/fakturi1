@@ -117,8 +117,6 @@ function exportCSV() {
 function exportPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-
-
     const getText = selector => document.querySelector(selector)?.innerText || "";
 
     let y = 10;
@@ -178,8 +176,40 @@ function exportPDF() {
     doc.line(80, lineY, 140, lineY);
     doc.line(140, lineY, 200, lineY);
 
-    doc.save("faktura.pdf");
+    doc.save("invoice.pdf");
 }
+function generatePDF() {
+    // Hide user-only elements
+    const userElements = document.querySelectorAll('.no-print, .delete-column, .delete-cell');
+    userElements.forEach(el => el.style.display = 'none');
+
+    // Scroll to top to capture full content
+    window.scrollTo(0, 0);
+
+    const element = document.body;
+    const opt = {
+        margin:       0.5,
+        filename:     'faktura.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  {
+            scale: 2,
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: document.body.scrollWidth,
+            windowHeight: document.body.scrollHeight
+        },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Restore visibility after saving PDF
+        userElements.forEach(el => el.style.display = '');
+    });
+}
+
+
+
+
 
 function toggleDarkMode() {
     document.body.classList.toggle("dark");
