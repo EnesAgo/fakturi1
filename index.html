@@ -16,14 +16,54 @@
         <button onclick="addProduct()">Add</button>
     </div>
 
+    <div class="invoice-header">
+        <div class="left-header">
+            <strong>ТП ЛЕСА КОМПАНИ</strong>
+            <div class="line"></div>
+
+            <span contenteditable="true" >........</span><br>
+            <span contenteditable="true" >..., Македонија</span>
+            <hr>
+
+            <strong>Жиро сметка:</strong> <span contenteditable="true" >250000402011664</span><br>
+            <strong>Банка:</strong> <span contenteditable="true" >Шпаркасе банка Македонија АД Скопје</span><br>
+            <strong>ЕДБ МК:</strong> <span contenteditable="true" >5007017514353</span>
+            <hr>
+
+            <h2><strong contenteditable="true" >ФАКТУРА Бр. ....</strong></h2>
+            <hr>
+
+            <br><br><strong>ДО</strong>
+            <hr>
+            <span contenteditable="true" >ГД ГРАНИТ АД СКОПЈЕ</span><br>
+            <span contenteditable="true" >Ул. Димитрие Чуповски бр. 8</span><br>
+            <span contenteditable="true" >1000 Скопје, Македонија</span>
+            <hr>
+        </div>
+
+        <div class="right-header">
+            <br><br><br><br><br>
+            <strong>Договор бр.:</strong> <span contenteditable="true">12-595 од 01.02.2022</span><br>
+            <strong>Анекс бр.:</strong> <span contenteditable="true">12-1478 од 08.03.2024</span>
+            <hr>
+
+            <br><br><br>
+            <div style="width: 55%;margin-left: auto"><strong>Датум:</strong> <span contenteditable="true">28.02.2025</span><hr></div>
+
+        </div>
+    </div>
+
+
+
+    <br><br><br>
+
     <table id="productTable">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th class="no-print">Actions</th>
+            <th>Опис на услуга</th>
+            <th>Количина</th>
+            <th>Цена</th>
+            <th>Износ</th>
         </tr>
         </thead>
         <tbody>
@@ -33,10 +73,32 @@
 
     <!-- New Summary Section -->
     <div class="summary">
-        <p><strong>Subtotal:</strong> $<span id="subtotal">0.00</span></p>
-        <p><strong>Tax (5%):</strong> $<span id="tax">0.00</span></p>
-        <p><strong>Total with Tax:</strong> $<span id="totalWithTax">0.00</span></p>
+        <div class="left">
+            <p contenteditable="true">Рок на плаќање на фактурата е 60 дена. <br>
+                Сите останати услови се согласно договор. <br>
+                Во случај на спор надлежен Основниот суд во Гостивар.</p>
+        </div>
+        <div class="right">
+            <p><strong>Вкупно:</strong> <span id="subtotal">0.00</span></p>
+            <p><strong>ДДВ (5%):</strong> <span id="tax">0.00</span></p>
+            <p><strong>Вкупно со ДДВ:</strong> <span id="totalWithTax">0.00</span></p>
+        </div>
     </div>
+    <div class="signature-section">
+        <div class="signature">
+            <div class="line"></div>
+            <p>Примил</p>
+        </div>
+        <div class="signature">
+            <div class="line"></div>
+            <p>Издал</p>
+        </div>
+        <div class="signature">
+            <div class="line"></div>
+            <p>Овластено лице</p>
+        </div>
+    </div>
+
 
 
     <div class="buttons no-print">
@@ -50,6 +112,7 @@
 <!-- jsPDF CDN for PDF export -->
 <script src="jspdf.umd.min.js"></script>
 <script src="jspdf.plugin.autotable.min.js"></script>
+<script src="Roboto_Regular.js"></script>
 <script src="script.js"></script>
 
 </body>
